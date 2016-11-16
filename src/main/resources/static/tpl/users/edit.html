@@ -1,0 +1,34 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <form name="userFormEdit" ng-submit="save(userEdit, userIndex)" novalidate>
+            <input type="hidden" name="id" class="form-control" ng-model="userEdit.id" />
+            
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Editar Usuário {{user.name}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" ng-class="{ 'has-error' : userFormEdit.name.$invalid && !userFormEdit.name.$pristine }">
+                    <label>Name</label>
+                    <input autofocus type="text" name="name" class="form-control" ng-model="userEdit.name" required>
+                    <p ng-show="userFormEdit.name.$invalid && !userFormEdit.name.$pristine" class="help-block">Preencha o nome.</p>
+                </div>                
+                <div class="form-group" ng-class="{ 'has-error' : userFormEdit.email.$invalid && !userFormEdit.email.$pristine }">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control" ng-model="userEdit.email">
+                    <p ng-show="userFormEdit.email.$invalid && !userFormEdit.email.$pristine" class="help-block">Preencha um e-mail válido.</p>
+                </div>
+                <div class="form-group">
+                    <label>Nova Senha</label>
+                    <input type="password" name="password" class="form-control" ng-model="userEdit.password">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" ng-disabled="userFormEdit.$invalid" class="btn btn-success">Salvar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </form>
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->

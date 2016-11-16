@@ -1,0 +1,26 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <form name="userFormAdd" ng-submit="save(userAdd, 0)" novalidate>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Cadastro de Usuário</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" ng-class="{ 'has-error' : userFormAdd.name.$invalid && !userFormAdd.name.$pristine }">
+                    <label>Name</label>
+                    <input autofocus type="text" name="name" class="form-control" ng-model="userAdd.name" required>
+                    <p ng-show="userFormAdd.name.$invalid && !userFormAdd.name.$pristine" class="help-block">Preencha o nome.</p>
+                </div>                
+                <div class="form-group" ng-class="{ 'has-error' : userFormAdd.email.$invalid && !userFormAdd.email.$pristine }">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control" ng-model="userAdd.email">
+                    <p ng-show="userFormAdd.email.$invalid && !userFormAdd.email.$pristine" class="help-block">Preencha um e-mail válido.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" ng-disabled="userFormAdd.$invalid" class="btn btn-success">Salvar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </form>
+    </div>
+</div>

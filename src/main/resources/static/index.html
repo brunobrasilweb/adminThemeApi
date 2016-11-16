@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="app" lang="en">
+
+<head>
+    <title>Admin Theme</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/dist/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/plugins/bootstrap/dist/css/bootstrap.min.css">
+    <script src="/plugins/angular/angular.min.js"></script>
+    <script src="/plugins/angular-route/angular-route.min.js"></script>
+    <script src="/plugins/angular-cookies/angular-cookies.min.js"></script>
+    <script src="/plugins/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="/plugins/jquery/dist/jquery.min.js"></script>
+    <script src="/plugins/noty/js/noty/packaged/jquery.noty.packaged.min.js"></script>
+    <script src="/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/plugins/chart.js/dist/Chart.min.js"></script>
+    <script src="/plugins/angular-chart.js/dist/angular-chart.min.js"></script>
+    <script src="/plugins/ckeditor/ckeditor.js"></script>
+    <script src="/plugins/angular-ckeditor/angular-ckeditor.min.js"></script>
+    <script src="/plugins/lodash/dist/lodash.min.js"></script>
+    <script src="/dist/js/util.js"></script>
+    <script src="/dist/js/app.js"></script>
+    <script src="/dist/js/directive.js"></script>
+    <script src="/dist/js/service/authentication-service.js"></script>
+    <script src="/dist/js/service/users-service.js"></script>
+    <script src="/dist/js/controller/login-controller.js"></script>
+    <script src="/dist/js/controller/users-controller.js"></script>
+    <script src="/dist/js/controller/dashboard-controller.js"></script>
+</head>
+
+<body>
+    <nav ng-if="pageCurrent != '/login'" class="navbar navbar-inverse navbar-fixed-top" ng-include="'/tpl/layout/nav.html'"></nav>
+    <div class="container" ng-view></div>
+</body>
+
+</html>

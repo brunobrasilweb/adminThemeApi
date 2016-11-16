@@ -1,0 +1,83 @@
+<h3>Dashboard</h3>
+<hr />
+
+<div class="row">
+    <div class="col-md-3">
+        <a class="info-tiles tiles-inverse has-footer" href="#">
+            <div class="tiles-heading">
+                Orders
+            </div>
+            <div class="tiles-body">
+                <div class="text-center">1,275</div>
+            </div>
+            <div class="tiles-footer">
+                <div class="pull-left">manage orders</div>
+                <div class="pull-right percent-change">+20.7%</div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3">
+        <a class="info-tiles tiles-green has-footer" href="#">
+            <div class="tiles-heading">
+                Revenues
+            </div>
+            <div class="tiles-body">
+                <div class="text-center">$71,250</div>
+            </div>
+            <div class="tiles-footer">
+                <div class="pull-left">go to accounts</div>
+                <div class="pull-right percent-change">+17.2%</div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3">
+        <a class="info-tiles tiles-blue has-footer" href="#">
+            <div class="tiles-heading">
+                Tickets
+            </div>
+            <div class="tiles-body">
+                <div class="text-center">1,500</div>
+            </div>
+            <div class="tiles-footer">
+                <div class="pull-left">see all tickets</div>
+                <div class="pull-right percent-change">+10.3%</div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3">
+        <a class="info-tiles tiles-midnightblue has-footer" href="#">
+            <div class="tiles-heading">
+                Members
+            </div>
+            <div class="tiles-body">
+                <div class="text-center">6,500</div>
+            </div>
+            <div class="tiles-footer">
+                <div class="pull-left">manage members</div>
+                <div class="pull-right percent-change">-11.1%</div>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">Gráfico Bar</div>
+            <div class="panel-body">
+                <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" chart-series="series"></canvas>    
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Gráfico Doughnut</div>
+            <div class="panel-body">
+                <canvas id="doughnut" class="chart chart-doughnut" chart-data="data2" chart-labels="labels2"></canvas> 
+            </div>
+        </div>
+    </div>
+    
+</div>
