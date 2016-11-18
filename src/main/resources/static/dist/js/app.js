@@ -30,7 +30,8 @@ function run($rootScope, $location, $cookieStore, $http) {
     // Manter usuário logado quando atualizar a página
     $rootScope.globals = $cookieStore.get('globals') || {};
     $rootScope.urlApi = "http://localhost:8080";
-    
+
+    /*
     if ($rootScope.globals.currentUser) {
         $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
     }
@@ -46,5 +47,5 @@ function run($rootScope, $location, $cookieStore, $http) {
             $location.path('/login');
         }
     });
-    
+    */
 }

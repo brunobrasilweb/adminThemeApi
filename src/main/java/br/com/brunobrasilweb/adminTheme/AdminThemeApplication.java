@@ -14,14 +14,5 @@ public class AdminThemeApplication {
 		SpringApplication.run(AdminThemeApplication.class, args);
 	}
 
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurerAdapter() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/users").allowedOrigins("http://localhost:8888");
-			}
-		};
-	}
 
 }
