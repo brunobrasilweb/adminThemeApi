@@ -1,13 +1,13 @@
-# Tema Admin AngularJs
-Tema padrão para aplicações com admin com Spring e AngularJs
+# Admin Theme with Spring Boot and AngularJs
 
-Características
+Features
 ---
 
-* REST API com Spring Boot
-* Página de Login
+* REST API with Spring Boot
+* OAuth2 Security
+* Login Page
 * Dashboard
-* Crud Usuários (busca, paginação e cadastro em modal)
+* Complete Crud Users
 
 Plugins
 ---
@@ -21,16 +21,17 @@ Plugins
 * Noty
 * Bower
 * Lodash
+* moment
 
 Install
 ---
 
-Baixar o tema
+Clone repository git
 ```sh
 git clone https://github.com/brunobrasilweb/adminThemeApi.git
 ```
 
-Instalar os plugins
+downloads plugins
 ```sh
 cd project\src\main\resources\static
 bower install
@@ -38,17 +39,18 @@ bower install
 
 Configurar conexão com banco de dados em application.properties
 
-Rodar Spring Boot Rest API http://localhost:8080/
+Spring boot run http://localhost:8080/
 ```sh
 $ cd adminTheme/adminThemeApi
-$ mvnw spring-boot:run
+$ mvn spring-boot:run
 ```
 
 TODO
 ---
 
-* Salvar a senha criptografada do usuário;
-* Correção para limpar o formulário de cadastro (por enquanto ta com Jquery);
-* Login com autenticação;
-* Edição do usuário;
-* Loading único;
+* Complete crud user;
+* Info user logged;
+* Page My Account;
+* Loading unique;
+* Log angular and java
+* Clear form crud (At moment using Jquery);

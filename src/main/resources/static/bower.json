@@ -12,7 +12,7 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "app/bower_components",
+    "bower_components",
     "test",
     "tests"
   ],
@@ -28,6 +28,7 @@
     "angular-chart.js": "^1.0.3",
     "angular-ckeditor": "^1.0.3",
     "ckeditor": "^4.5.11",
-    "lodash": "^4.17.0"
+    "lodash": "^4.17.0",
+    "moment": "^2.16.0"
   }
 }

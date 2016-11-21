@@ -26,26 +26,39 @@ function config($routeProvider, $httpProvider, $locationProvider) {
         .otherwise({ redirectTo: '/login' });
 }
 
-function run($rootScope, $location, $cookieStore, $http) {
+function run($rootScope, $location, $window, $cookieStore, $http, UsersService) {
     // Manter usuário logado quando atualizar a página
-    $rootScope.globals = $cookieStore.get('globals') || {};
-    $rootScope.urlApi = "http://localhost:8080";
+    $rootScope.accessToken = $cookieStore.get('access_token') || null;
+    console.log("accessToken: " + $rootScope.accessToken);
+    $rootScope.userLogged = $cookieStore.get('userLogged') || {};
+    $rootScope.apiUrl = "http://localhost:8080";
+    $rootScope.apiClientId = "clientapp";
+    $rootScope.apiClientSecret = "123456";
+    $rootScope.apiScope = "read write";
+    $rootScope.apiUrlOAuth = "http://" + $rootScope.apiClientId + ":" + $rootScope.apiClientSecret + "@localhost:8080/oauth/token";
+    $rootScope.logout = function() {
+        UsersService.logout();
+        $window.location.href = '/';
+    }
 
-    /*
-    if ($rootScope.globals.currentUser) {
-        $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+    if ($rootScope.accessToken) {
+        $http.defaults.headers.common['Authorization'] = 'Bearer ' + $rootScope.accessToken;
     }
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
         // redirecionar para o login quando não tiver logado
         var restrictedPage = $.inArray($location.path(), ['/login']) === -1;
-        var loggedIn = $rootScope.globals.currentUser;
+        var loggedIn = $rootScope.accessToken;
 
         $rootScope.pageCurrent = $location.path();
+
+        if ($rootScope.pageCurrent != "/login" && loggedIn) {
+            UsersService.refreshToken();
+        }
 
         if (restrictedPage && !loggedIn) {
             $location.path('/login');
         }
     });
-    */
+
 }
