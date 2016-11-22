@@ -5,6 +5,7 @@ body {
   text-align: center;
 }
 
+.red { color:red; }
 .navbar-form{width:50%;}
 .navbar-form .input-group{width:420px;}
 .dropdown-menu{width:420px;}

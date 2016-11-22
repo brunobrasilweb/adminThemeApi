@@ -53,9 +53,9 @@ angular.module('app').service('UsersService', function($http, $rootScope, $cooki
             };
 
             return $http(config).then(function (response) {
-                var expiresIn = moment().add(parseInt(response.data.expires_in), 'seconds');
+                var expiresIn = moment().add(response.data.expires_in, 'seconds').format("YYYYMMDDHHmmss");
                 $cookieStore.put('access_token', response.data.access_token);
-                $cookieStore.put('expires_in', expiresIn.format("YYMMDDhmmss"));
+                $cookieStore.put('expires_in', expiresIn);
                 $cookieStore.put('refresh_token', response.data.refresh_token);
 
                 return response.data;
@@ -64,7 +64,7 @@ angular.module('app').service('UsersService', function($http, $rootScope, $cooki
             });
         },
         refreshToken: function () {
-            var now = parseInt(moment().format("YYMMDDhmmss"));
+            var now = parseInt(moment().format("YYYYMMDDHHmmss"));
             var expiresIn = parseInt($cookieStore.get('expires_in')) || 0;
 
             if (now > expiresIn) {
@@ -82,6 +82,7 @@ angular.module('app').service('UsersService', function($http, $rootScope, $cooki
                     $cookieStore.put('access_token', response.data.access_token);
                     $cookieStore.put('expires_in', expiresIn.format("YYMMDDhmmss"));
                     $cookieStore.put('refresh_token', response.data.refresh_token);
+                    $http.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token;
 
                     return response.data;
                 }, function(error){

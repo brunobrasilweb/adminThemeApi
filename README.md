@@ -49,6 +49,8 @@ TODO
 ---
 
 * Complete crud user;
+- Put fields
+- Encrypt Password
 * Info user logged;
 * Page My Account;
 * Loading unique;
