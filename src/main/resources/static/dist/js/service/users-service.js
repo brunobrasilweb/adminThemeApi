@@ -1,4 +1,4 @@
-angular.module('app').service('UsersService', function($http, $rootScope, $cookieStore) {
+angular.module('app').service('UsersService', function($http, $rootScope, $cookieStore, ErrorAjax) {
     return {
         _search: function(q) {
             var queryString = null;
@@ -18,6 +18,8 @@ angular.module('app').service('UsersService', function($http, $rootScope, $cooki
 
             return $http.get(urlApi + '?' + search + '&sort=' + sort + '&page=' + page).then(function(response) {
                 return response.data;
+            }, function (error){
+                return ErrorAjax.getError(error.data);
             });
         },
         save: function(user) {
@@ -26,14 +28,41 @@ angular.module('app').service('UsersService', function($http, $rootScope, $cooki
                     return response.data;
                 });
             } else {
+                if (user.changePassword) {
+                    user.password = md5(user.newPassword);
+                    delete user.changePassword;
+                    delete user.newPassword;
+                }
                 var id = user.id;
                 return $http.put($rootScope.apiUrl + '/users/' + id, user).then(function(response) {
                     return response.data;
                 });
             }            
         },
+        updateProfile: function(user) {
+            var s = this;
+            if (user.changePassword) {
+                user.password = md5(user.newPassword);
+                delete user.changePassword;
+                delete user.newPassword;
+            }
+            var id = user.id;
+            return $http.put($rootScope.apiUrl + '/users/' + id, user).then(function(response) {
+                s.setDataUserLogged(response.data);
+                return response.data;
+            });
+        },
+        setDataUserLogged: function(data) {
+            $cookieStore.put('user', data);
+            $rootScope.userLogged = data;
+        },
         getUser: function(id) {
             return $http.get($rootScope.apiUrl + '/users/' + id).then(function(response) {
+                return response.data;
+            });
+        },
+        getByLogin: function(login) {
+            return $http.get($rootScope.apiUrl + '/users/by-login/' + login).then(function(response) {
                 return response.data;
             });
         },
@@ -43,13 +72,14 @@ angular.module('app').service('UsersService', function($http, $rootScope, $cooki
             });
         },
         login: function(username, password) {
+            var s = this;
             var config = {
                 method: 'POST',
                 url: $rootScope.apiUrlOAuth,
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                data: 'client_secret=' + $rootScope.apiClientSecret + '&client_id=' + $rootScope.apiClientId + '&scope=' + $rootScope.apiScope + '&grant_type=password&username=' + username + '&password=' + password
+                data: 'client_secret=' + $rootScope.apiClientSecret + '&client_id=' + $rootScope.apiClientId + '&scope=' + $rootScope.apiScope + '&grant_type=password&username=' + username + '&password=' + md5(password)
             };
 
             return $http(config).then(function (response) {
@@ -57,6 +87,11 @@ angular.module('app').service('UsersService', function($http, $rootScope, $cooki
                 $cookieStore.put('access_token', response.data.access_token);
                 $cookieStore.put('expires_in', expiresIn);
                 $cookieStore.put('refresh_token', response.data.refresh_token);
+                $http.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token;
+
+                s.getByLogin(username).then(function(data){
+                    s.setDataUserLogged(data);
+                });
 
                 return response.data;
             }, function (error){
@@ -67,12 +102,13 @@ angular.module('app').service('UsersService', function($http, $rootScope, $cooki
             var now = parseInt(moment().format("YYYYMMDDHHmmss"));
             var expiresIn = parseInt($cookieStore.get('expires_in')) || 0;
 
-            if (now > expiresIn) {
-                delete $http.defaults.headers.common['Authorization'];
+            //if (now > expiresIn) {
+                //delete $http.defaults.headers.common['Authorization'];
                 var config = {
                     method: 'POST',
                     url: $rootScope.apiUrlOAuth,
                     headers: {
+                        'Authorization': 'Basic Y2xpZW50YXBwOjEyMzQ1Ng==',
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
                     data: 'grant_type=refresh_token&client_secret=' + $rootScope.apiClientSecret + '&client_id=' + $rootScope.apiClientId + '&refresh_token=' + $cookieStore.get('refresh_token')
@@ -86,9 +122,9 @@ angular.module('app').service('UsersService', function($http, $rootScope, $cooki
 
                     return response.data;
                 }, function(error){
-                    $rootScope.logout();
+                    return ErrorAjax.getError(error.data);
                 });
-            }
+            //}
         },
         logout: function() {
             $cookieStore.remove('access_token');

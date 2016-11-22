@@ -23,7 +23,7 @@
                 </div>
                 <div class="form-group" ng-class="{ 'has-error' : userFormAdd.password.$invalid && !userFormAdd.password.$pristine }">
                     <label>Password</label> <i class="red">*</i>
-                    <input type="text" name="password" class="form-control" ng-model="userAdd.password">
+                    <input type="password" name="password" class="form-control" ng-model="userAdd.password">
                     <p ng-show="userFormAdd.password.$invalid && !userFormAdd.password.$pristine" class="help-block">Preencha a senha para acessar o sistema.</p>
                 </div>
             </div>

@@ -1,0 +1,46 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <form name="userFormProfile" ng-submit="updateProfile(userLogged)" novalidate>
+            <input type="hidden" name="id" class="form-control" ng-model="userLogged.id" />
+            
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Editar Usuário {{userLogged.name}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" ng-class="{ 'has-error' : userFormProfile.name.$invalid && !userFormProfile.name.$pristine }">
+                    <label>Name</label> <i class="red">*</i>
+                    <input autofocus type="text" name="name" class="form-control" ng-model="userLogged.name" required>
+                    <p ng-show="userFormProfile.name.$invalid && !userFormProfile.name.$pristine" class="help-block">Preencha o nome.</p>
+                </div>                
+                <div class="form-group" ng-class="{ 'has-error' : userFormProfile.email.$invalid && !userFormProfile.email.$pristine }">
+                    <label>Email</label> <i class="red">*</i>
+                    <input type="email" name="email" class="form-control" ng-model="userLogged.email">
+                    <p ng-show="userFormProfile.email.$invalid && !userFormProfile.email.$pristine" class="help-block">Preencha um e-mail válido.</p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : userFormProfile.login.$invalid && !userFormProfile.login.$pristine }">
+                    <label>Login</label> <i class="red">*</i>
+                    <input type="text" name="login" class="form-control" ng-model="userLogged.login">
+                    <p ng-show="userFormProfile.login.$invalid && !userFormProfile.login.$pristine" class="help-block">Preencha o login de acesso.</p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : userFormProfile.login.$invalid && !userFormProfile.login.$pristine }">
+                    <label>
+                        <input type="hidden" name="password" class="form-control" ng-model="userLogged.password">
+                        <input type="checkbox" ng-model="userLogged.changePassword">
+                        Mudar a Senha?
+                    </label>
+                </div>
+                <div ng-show="userLogged.changePassword" class="form-group">
+                    <label>Nova Senha</label>
+                    <input type="password" name="password" class="form-control" ng-model="userLogged.newPassword">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" ng-disabled="userFormProfile.$invalid" class="btn btn-success">Salvar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </form>
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->

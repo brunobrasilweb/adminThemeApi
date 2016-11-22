@@ -29,6 +29,7 @@
     "angular-ckeditor": "^1.0.3",
     "ckeditor": "^4.5.11",
     "lodash": "^4.17.0",
-    "moment": "^2.16.0"
+    "moment": "^2.16.0",
+    "js-md5": "md5#^0.4.1"
   }
 }

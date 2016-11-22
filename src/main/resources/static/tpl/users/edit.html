@@ -23,9 +23,16 @@
                     <input type="text" name="login" class="form-control" ng-model="userEdit.login">
                     <p ng-show="userFormEdit.login.$invalid && !userFormEdit.login.$pristine" class="help-block">Preencha o login de acesso.</p>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-class="{ 'has-error' : userFormEdit.login.$invalid && !userFormEdit.login.$pristine }">
+                    <label>
+                        <input type="hidden" name="password" class="form-control" ng-model="userEdit.password">
+                        <input type="checkbox" ng-model="userEdit.changePassword">
+                        Mudar a Senha?
+                    </label>
+                </div>
+                <div ng-show="userEdit.changePassword" class="form-group">
                     <label>Nova Senha</label>
-                    <input type="password" name="password" class="form-control" ng-model="userEdit.password">
+                    <input type="password" name="password" class="form-control" ng-model="userEdit.newPassword">
                 </div>
             </div>
             <div class="modal-footer">

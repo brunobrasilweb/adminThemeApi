@@ -6,6 +6,8 @@ Features
 * REST API with Spring Boot
 * OAuth2 Security
 * Login Page
+* Page 404
+* Profile
 * Dashboard
 * Complete Crud Users
 
@@ -48,11 +50,6 @@ $ mvn spring-boot:run
 TODO
 ---
 
-* Complete crud user;
-- Put fields
-- Encrypt Password
-* Info user logged;
-* Page My Account;
 * Loading unique;
 * Log angular and java
 * Clear form crud (At moment using Jquery);

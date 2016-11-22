@@ -15,6 +15,10 @@ function config($routeProvider, $httpProvider, $locationProvider) {
             controller: 'DashboardController',
             templateUrl: 'tpl/dashboard.html'
         })
+        .when('/404', {
+            controller: 'ErrorPageController',
+            templateUrl: 'tpl/404.html'
+        })
         .when('/login', {
             controller: 'LoginController',
             templateUrl: 'tpl/users/login.html'
@@ -23,38 +27,39 @@ function config($routeProvider, $httpProvider, $locationProvider) {
             controller: 'UsersController',
             templateUrl: 'tpl/users/list.html'
         })
-        .otherwise({ redirectTo: '/login' });
+        .otherwise({ redirectTo: '/' });
 }
 
 function run($rootScope, $location, $window, $cookieStore, $http, UsersService) {
-    // Manter usuário logado quando atualizar a página
-    $rootScope.accessToken = $cookieStore.get('access_token') || null;
-    console.log("accessToken: " + $rootScope.accessToken);
-    $rootScope.userLogged = $cookieStore.get('userLogged') || {};
+    var apiToken = $cookieStore.get('access_token') || null;
+
+    $rootScope.userLogged = $cookieStore.get("user") || null;
     $rootScope.apiUrl = "http://localhost:8080";
     $rootScope.apiClientId = "clientapp";
     $rootScope.apiClientSecret = "123456";
     $rootScope.apiScope = "read write";
     $rootScope.apiUrlOAuth = "http://" + $rootScope.apiClientId + ":" + $rootScope.apiClientSecret + "@localhost:8080/oauth/token";
+    $rootScope.updateProfile = function(data) {
+        UsersService.updateProfile(data).then(function(){
+            $('#form-profile').modal('hide');
+            noty({layout: 'topCenter', timeout: 2000, type: 'success', text: 'Seus dados foram salvo.'});
+        });
+    }
     $rootScope.logout = function() {
         UsersService.logout();
-        $window.location.href = '/';
+        $location.path('/login');
     }
 
-    if ($rootScope.accessToken) {
-        $http.defaults.headers.common['Authorization'] = 'Bearer ' + $rootScope.accessToken;
+    if (apiToken) {
+        $http.defaults.headers.common['Authorization'] = 'Bearer ' + apiToken;
     }
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
         // redirecionar para o login quando não tiver logado
         var restrictedPage = $.inArray($location.path(), ['/login']) === -1;
-        var loggedIn = $rootScope.accessToken;
+        var loggedIn = $cookieStore.get('access_token') || null;
 
         $rootScope.pageCurrent = $location.path();
-
-        if ($rootScope.pageCurrent != "/login" && loggedIn) {
-            UsersService.refreshToken();
-        }
 
         if (restrictedPage && !loggedIn) {
             $location.path('/login');
