@@ -37,7 +37,7 @@ cd project\src\main\resources\static
 bower install
 ```
 
-Configurar conexão com banco de dados em application.properties
+Config database in application.properties
 
 Spring boot run http://localhost:8080/
 ```sh

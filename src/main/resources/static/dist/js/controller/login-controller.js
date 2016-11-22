@@ -1,6 +1,7 @@
 angular.module('app').controller('LoginController', LoginController);
 
 function LoginController($scope, $window, $rootScope, UsersService) {
+    $rootScope.title = "Login";
 
     (function() {
         if ($rootScope.accessToken) {

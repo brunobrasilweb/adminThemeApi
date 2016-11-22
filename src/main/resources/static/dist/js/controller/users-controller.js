@@ -1,6 +1,8 @@
 angular.module('app').controller('UsersController', UsersController);
 
-function UsersController($scope, $routeParams, $location, $window, UsersService) {
+function UsersController($scope, $rootScope, $routeParams, $location, $window, UsersService) {
+    $rootScope.title = "Usuários";
+
     $scope.pageCurrent = ($routeParams.page) ? $routeParams.page : 1;
     $scope.list = function (q) {
         UsersService.getList($scope.pageCurrent, q).then(function (data) {
