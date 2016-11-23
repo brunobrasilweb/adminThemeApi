@@ -1,6 +1,6 @@
 angular.module('app').controller('UsersController', UsersController);
 
-function UsersController($scope, $rootScope, $routeParams, $location, $window, UsersService) {
+function UsersController($scope, $rootScope, $routeParams, $location, $window, UsersService, cfpLoadingBar) {
     $rootScope.title = "Usuários";
 
     $scope.pageCurrent = ($routeParams.page) ? $routeParams.page : 1;
@@ -15,6 +15,7 @@ function UsersController($scope, $rootScope, $routeParams, $location, $window, U
     $scope.list({});    
 
     $scope.save = function (user, userIndex) {
+        cfpLoadingBar.start();
         UsersService.save(user).then(function(userSaved){
             if (userSaved.id) {
                 if (!user.id) {
@@ -27,6 +28,7 @@ function UsersController($scope, $rootScope, $routeParams, $location, $window, U
 
                 $('input').val('');
                 $('#form-add, #form-edit').modal('hide');
+                cfpLoadingBar.complete();
                 noty({layout: 'topCenter', timeout: 2000, type: 'success', text: 'Usuário foi salvo.'});
             } else {
                 noty({layout: 'topCenter', timeout: 2000, type: 'error', text: 'Não foi possível salvar o usuário. Tente novamente mais tarde.'});

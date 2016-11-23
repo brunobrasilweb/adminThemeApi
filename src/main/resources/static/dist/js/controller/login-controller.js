@@ -1,6 +1,6 @@
 angular.module('app').controller('LoginController', LoginController);
 
-function LoginController($scope, $http, $location, $window, $rootScope, UsersService) {
+function LoginController($scope, $http, $location, $window, $rootScope, UsersService, cfpLoadingBar) {
     $rootScope.title = "Login";
 
     (function() {
@@ -11,8 +11,10 @@ function LoginController($scope, $http, $location, $window, $rootScope, UsersSer
     })();
     
     $scope.login = function(username, password) {
-        $scope.dataLoading = true;
+        cfpLoadingBar.start();
+
         UsersService.login(username, password).then(function (data) {
+            cfpLoadingBar.complete();
             if (data.access_token) {
                 $location.path('/');
             } else {

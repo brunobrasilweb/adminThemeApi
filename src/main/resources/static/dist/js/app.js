@@ -5,11 +5,13 @@ angular
         'ngCookies',
         'chart.js',
         'ckeditor',
+        'ngAnimate',
+        'cfp.loadingBar'
     ])
     .config(config)
     .run(run);
 
-function config($routeProvider, $httpProvider, $locationProvider) {
+function config($routeProvider, $httpProvider, $locationProvider, cfpLoadingBarProvider) {
     $routeProvider
         .when('/', {
             controller: 'DashboardController',
@@ -28,6 +30,9 @@ function config($routeProvider, $httpProvider, $locationProvider) {
             templateUrl: 'tpl/users/list.html'
         })
         .otherwise({ redirectTo: '/' });
+
+    cfpLoadingBarProvider.includeSpinner = true;
+
 }
 
 function run($rootScope, $location, $window, $cookieStore, $http, UsersService) {

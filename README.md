@@ -14,16 +14,17 @@ Features
 Plugins
 ---
 
-* AngularJs
-* Jquery
-* Bootstrap 3
-* CKEditor
-* ChartJs
-* Animate CSS
-* Noty
-* Bower
-* Lodash
-* moment
+* [AngularJs] (https://angularjs.org/)
+* [Jquery] (https://jquery.com/)
+* [Bootstrap 3] (http://getbootstrap.com/)
+* [CKEditor] (https://github.com/lemonde/angular-ckeditor)
+* [ChartJs] (https://jtblin.github.io/angular-chart.js/)
+* [Animate CSS] (https://daneden.github.io/animate.css/)
+* [Noty] (http://ned.im/noty/)
+* [Bower] (https://bower.io/)
+* [Lodash] (https://lodash.com/)
+* [moment] (http://momentjs.com/)
+* [Angular Loading Bar] (http://chieffancypants.github.io/angular-loading-bar/)
 
 Install
 ---
@@ -50,6 +51,5 @@ $ mvn spring-boot:run
 TODO
 ---
 
-* Loading unique;
 * Log angular and java
 * Clear form crud (At moment using Jquery);
