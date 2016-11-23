@@ -51,5 +51,6 @@ $ mvn spring-boot:run
 TODO
 ---
 
-* Log angular and java
-* Clear form crud (At moment using Jquery);
+* Bug refreshing the page when the server was restarted
+* Role Crud
+* Clear form (At moment using Jquery);

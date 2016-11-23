@@ -4,6 +4,8 @@ function LoginController($scope, $http, $location, $window, $rootScope, UsersSer
     $rootScope.title = "Login";
 
     (function() {
+        delete $http.defaults.headers.common['Authorization'];
+
         if ($rootScope.accessToken) {
             console.log("tem token");
             return $location.path('/');

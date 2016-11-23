@@ -33,10 +33,33 @@ function config($routeProvider, $httpProvider, $locationProvider, cfpLoadingBarP
 
     cfpLoadingBarProvider.includeSpinner = true;
 
+    $httpProvider.interceptors.push(function ($q, $rootScope, $cookieStore, $window) {
+        return {
+            request: function (config) {
+                return config || $q.when(config)
+            },
+            response: function (response) {
+                return response || $q.when(response);
+            },
+            responseError: function (response) {
+                if (response.status === 401) {
+                    $cookieStore.remove('access_token');
+                    $cookieStore.remove('expires_in');
+                    $cookieStore.remove('refresh_token');
+                    $cookieStore.remove('user');
+                    $cookieStore.put('Authorization', 'Basic hj43jherje34');
+
+                    $window.location.href = '/#/login';
+                }
+                return $q.reject(response);
+            }
+        };
+    });
+
 }
 
 function run($rootScope, $location, $window, $cookieStore, $http, UsersService) {
-    var apiToken = $cookieStore.get('access_token') || null;
+    var authorization = $cookieStore.get('Authorization') || null;
 
     $rootScope.userLogged = $cookieStore.get("user") || null;
     $rootScope.apiUrl = "http://localhost:8080";
@@ -55,16 +78,21 @@ function run($rootScope, $location, $window, $cookieStore, $http, UsersService) 
         $location.path('/login');
     }
 
-    if (apiToken) {
-        $http.defaults.headers.common['Authorization'] = 'Bearer ' + apiToken;
+    if (authorization) {
+        $http.defaults.headers.common['Authorization'] = authorization;
     }
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
         // redirecionar para o login quando não tiver logado
+        var authorization = $cookieStore.get('Authorization') || null;
         var restrictedPage = $.inArray($location.path(), ['/login']) === -1;
         var loggedIn = $cookieStore.get('access_token') || null;
 
         $rootScope.pageCurrent = $location.path();
+
+        if (authorization) {
+            $http.defaults.headers.common['Authorization'] = authorization;
+        }
 
         if (restrictedPage && !loggedIn) {
             $location.path('/login');

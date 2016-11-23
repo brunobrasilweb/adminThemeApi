@@ -83,11 +83,12 @@ angular.module('app').service('UsersService', function($http, $rootScope, $cooki
             };
 
             return $http(config).then(function (response) {
-                var expiresIn = moment().add(response.data.expires_in, 'seconds').format("YYYYMMDDHHmmss");
-                $cookieStore.put('access_token', response.data.access_token);
-                $cookieStore.put('expires_in', expiresIn);
+                var expiresIn = moment().add(response.data.access_token, 'seconds');
+                var token = response.data.access_token;
+                $cookieStore.put('access_token', token);
+                $cookieStore.put('expires_in', expiresIn.format("YYMMDDhmmss"));
                 $cookieStore.put('refresh_token', response.data.refresh_token);
-                $http.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token;
+                $cookieStore.put('Authorization', 'Bearer ' + token);
 
                 s.getByLogin(username).then(function(data){
                     s.setDataUserLogged(data);
@@ -115,10 +116,11 @@ angular.module('app').service('UsersService', function($http, $rootScope, $cooki
                 };
                 return $http(config).then(function (response) {
                     var expiresIn = moment().add(response.data.access_token, 'seconds');
-                    $cookieStore.put('access_token', response.data.access_token);
+                    var token = response.data.access_token;
+                    $cookieStore.put('access_token', token);
                     $cookieStore.put('expires_in', expiresIn.format("YYMMDDhmmss"));
                     $cookieStore.put('refresh_token', response.data.refresh_token);
-                    $http.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token;
+                    $cookieStore.put('Authorization', 'Bearer ' + token);
 
                     return response.data;
                 }, function(error){
@@ -130,7 +132,8 @@ angular.module('app').service('UsersService', function($http, $rootScope, $cooki
             $cookieStore.remove('access_token');
             $cookieStore.remove('expires_in');
             $cookieStore.remove('refresh_token');
-            delete $http.defaults.headers.common['Authorization'];
+            $cookieStore.remove('user');
+            $cookieStore.put('Authorization', 'Basic gr3434g34g34g5');
         }
     };
 });
