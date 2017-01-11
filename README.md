@@ -51,6 +51,11 @@ $ mvn spring-boot:run
 TODO
 ---
 
-* Bug refreshing the page when the server was restarted
-* Role Crud
+* Crud Role
 * Clear form (At moment using Jquery);
+* Separar o frontend do backend
+* Colocar o dialog modal na diretiva
+* Fazer uma diretiva de table list
+* Colocar um loading na diretiva
+* Colocar o gulp para rodar um servidor
+

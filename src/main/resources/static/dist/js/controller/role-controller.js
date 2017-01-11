@@ -1,72 +1,72 @@
-angular.module('app').controller('UsersController', UsersController);
+angular.module('app').controller('RoleController', RoleController);
 
-function UsersController($scope, $rootScope, $routeParams, $location, $window, UsersService, cfpLoadingBar) {
-    $rootScope.title = "Usuários";
+function RoleController($scope, $rootScope, $routeParams, $location, $window, RoleService, cfpLoadingBar) {
+    $rootScope.title = "Cargos";
 
     $scope.pageCurrent = ($routeParams.page) ? $routeParams.page : 1;
     $scope.list = function (q) {
-        UsersService.getList($scope.pageCurrent, q).then(function (data) {
+        RoleService.getList($scope.pageCurrent, q).then(function (data) {
             $scope.pageTotal = data.page.totalPages;
             $scope.pages = pages($scope.pageTotal);
-            $scope.users = data._embedded.users;
+            $scope.roles = data._embedded.role;
         });
     }
 
     $scope.list({});    
 
-    $scope.save = function (user, userIndex) {
+    $scope.save = function (role, roleIndex) {
         cfpLoadingBar.start();
-        UsersService.save(user).then(function(userSaved){
-            if (userSaved.id) {
-                if (!user.id) {
-                    $scope.users.push(userSaved);
-                    delete $scope.userAdd;
+        RoleService.save(role).then(function(roleSaved){
+            if (roleSaved.id) {
+                if (!role.id) {
+                    $scope.roles.push(roleSaved);
+                    delete $scope.roleAdd;
                 } else {
-                    $scope.users[userIndex] = userSaved;
-                    delete $scope.userEdit;
+                    $scope.roles[roleIndex] = roleSaved;
+                    delete $scope.roleEdit;
                 }
 
                 $('input').val('');
                 $('#form-add, #form-edit').modal('hide');
                 cfpLoadingBar.complete();
-                noty({layout: 'topCenter', timeout: 2000, type: 'success', text: 'Usuário foi salvo.'});
+                noty({layout: 'topCenter', timeout: 2000, type: 'success', text: 'O Cargo foi salvo.'});
             } else {
-                noty({layout: 'topCenter', timeout: 2000, type: 'error', text: 'Não foi possível salvar o usuário. Tente novamente mais tarde.'});
+                noty({layout: 'topCenter', timeout: 2000, type: 'error', text: 'Não foi possível salvar o cargo. Tente novamente mais tarde.'});
             }
         });
             
     }
 
-    $scope.edit = function (user, userIndex) {
-        UsersService.getUser(user.id).then(function (user) {
-            $scope.userEdit = user;
-            $scope.userIndex = userIndex;
+    $scope.edit = function (role, roleIndex) {
+        RoleService.getRole(role.id).then(function (role) {
+            $scope.roleEdit = role;
+            $scope.roleIndex = roleIndex;
         });
     }        
     
-    $scope.delete = function (id, userIndex) {
+    $scope.delete = function (id, roleIndex) {
         var del = $window.confirm('Você tem certeza que deseja excluir o registro?');
         
         if (del) {
-            UsersService.delete(id).then(function (ret) {
+            RoleService.delete(id).then(function (ret) {
                 if (!ret) {
-                    $scope.users.splice(userIndex, 1);
+                    $scope.roles.splice(roleIndex, 1);
                 } else {
-                    noty({layout: 'topCenter', timeout: 2000, type: 'error', text: 'Não foi possível deletar usuário. Tente novamente mais tarde.'});
+                    noty({layout: 'topCenter', timeout: 2000, type: 'error', text: 'Não foi possível deletar o cargo. Tente novamente mais tarde.'});
                 }
             });
         }
     }
 
-    $scope.deleteMass = function (users) {
+    $scope.deleteMass = function (role) {
         var del = $window.confirm('Você tem certeza que deseja excluir registros em massa?');
         
         if (del) {
-            angular.forEach(users, function(user, key) {
-                if (user.selected) {
-                    UsersService.delete(user.id).then(function (ret) {
+            angular.forEach(role, function(role, key) {
+                if (role.selected) {
+                    RoleService.delete(role.id).then(function (ret) {
                         if (!ret) {
-                            $scope.users.splice(key, 1);
+                            $scope.roles.splice(key, 1);
                         }
                     });
                 }

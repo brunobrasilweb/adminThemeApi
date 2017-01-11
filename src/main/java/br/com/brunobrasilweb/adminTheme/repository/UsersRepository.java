@@ -8,8 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 
-import javax.persistence.Column;
-
 @RepositoryRestResource(collectionResourceRel = "users", path = "users")
 public interface UsersRepository extends PagingAndSortingRepository<Users, Long> {
 

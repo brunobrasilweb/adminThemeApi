@@ -29,6 +29,10 @@ function config($routeProvider, $httpProvider, $locationProvider, cfpLoadingBarP
             controller: 'UsersController',
             templateUrl: 'tpl/users/list.html'
         })
+        .when('/role/:page?', {
+            controller: 'RoleController',
+            templateUrl: 'tpl/role/list.html'
+        })
         .otherwise({ redirectTo: '/' });
 
     cfpLoadingBarProvider.includeSpinner = true;
@@ -62,11 +66,11 @@ function run($rootScope, $location, $window, $cookieStore, $http, UsersService) 
     var authorization = $cookieStore.get('Authorization') || null;
 
     $rootScope.userLogged = $cookieStore.get("user") || null;
-    $rootScope.apiUrl = "http://localhost:8080";
+    $rootScope.apiUrl = "http://localhost:8090";
     $rootScope.apiClientId = "clientapp";
     $rootScope.apiClientSecret = "123456";
     $rootScope.apiScope = "read write";
-    $rootScope.apiUrlOAuth = "http://" + $rootScope.apiClientId + ":" + $rootScope.apiClientSecret + "@localhost:8080/oauth/token";
+    $rootScope.apiUrlOAuth = "http://" + $rootScope.apiClientId + ":" + $rootScope.apiClientSecret + "@localhost:8090/oauth/token";
     $rootScope.updateProfile = function(data) {
         UsersService.updateProfile(data).then(function(){
             $('#form-profile').modal('hide');

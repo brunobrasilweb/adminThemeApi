@@ -1,6 +1,8 @@
 angular.module('app').controller('UsersController', UsersController);
 
-function UsersController($scope, $rootScope, $routeParams, $location, $window, UsersService, cfpLoadingBar) {
+function UsersController($scope, $rootScope, $routeParams, $location,
+    $window, UsersService, RoleService, cfpLoadingBar) {
+
     $rootScope.title = "Usuários";
 
     $scope.pageCurrent = ($routeParams.page) ? $routeParams.page : 1;
@@ -12,7 +14,8 @@ function UsersController($scope, $rootScope, $routeParams, $location, $window, U
         });
     }
 
-    $scope.list({});    
+    $scope.list({});
+    $scope.roles =
 
     $scope.save = function (user, userIndex) {
         cfpLoadingBar.start();
